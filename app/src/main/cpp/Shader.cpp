@@ -1,7 +1,3 @@
-//
-// Created by xhui on 2024/10/7.
-//
-
 #include <array>
 
 #include <GLES3/gl3.h>

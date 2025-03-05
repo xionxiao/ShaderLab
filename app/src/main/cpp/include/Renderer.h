@@ -1,7 +1,3 @@
-//
-// Created by xhui on 2024/10/5.
-//
-
 #ifndef SHADER_TOY_ANDROID_RENDERER_H
 #define SHADER_TOY_ANDROID_RENDERER_H
 

@@ -1,7 +1,3 @@
-//
-// Created by xhui on 2024/10/5.
-//
-
 #include <chrono>
 #include <GLES3/gl3.h>
 #include "include/Log.h"
@@ -133,7 +129,7 @@ void GLRenderer::drawFrame() {
     eglQuerySurface(mDisplay, mSurface, EGL_WIDTH, &width);
     EGLint height;
     eglQuerySurface(mDisplay, mSurface, EGL_HEIGHT, &height);
-    ALOGD("%s %d %d", "=====XH===== GLRenderer::drawFrame", width, height);
+    ALOGD("%s %d %d", "GLRenderer::drawFrame", width, height);
 
     eglMakeCurrent(mDisplay, mSurface, mSurface, mContext);
 

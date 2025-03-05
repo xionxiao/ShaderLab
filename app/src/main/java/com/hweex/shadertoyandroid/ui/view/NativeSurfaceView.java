@@ -17,14 +17,14 @@ public class NativeSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     public NativeSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Log.d(LOG_TAG, "======XH===== Constructor");
+        Log.d(LOG_TAG, "Constructor");
         getHolder().addCallback(this);
     }
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         Surface surface = surfaceHolder.getSurface();
-        Log.d(LOG_TAG, "======XH====== surfaceCreated: " + surface);
+        Log.d(LOG_TAG, "SurfaceCreated: " + surface);
         if (surface != null) {
             nativeRenderer = onSurfaceCreatedNative(surface);
         }
@@ -33,6 +33,7 @@ public class NativeSurfaceView extends SurfaceView implements SurfaceHolder.Call
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int format, int width, int height) {
         Surface surface = surfaceHolder.getSurface();
+        Log.d(LOG_TAG, "SurfaceChanged: " + surface);
         if (surface != null) {
             onSurfaceChangedNative(nativeRenderer, surface, format, width, height);
         }
@@ -41,6 +42,7 @@ public class NativeSurfaceView extends SurfaceView implements SurfaceHolder.Call
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
         Surface surface = surfaceHolder.getSurface();
+        Log.d(LOG_TAG, "SurfaceDestroyed: " + surface);
         if (surface != null) {
             onSurfaceDestroyedNative(nativeRenderer, surface);
         }
@@ -50,6 +52,7 @@ public class NativeSurfaceView extends SurfaceView implements SurfaceHolder.Call
     @Override
     public void surfaceRedrawNeeded(@NonNull SurfaceHolder surfaceHolder) {
         Surface surface = surfaceHolder.getSurface();
+        Log.d(LOG_TAG, "SurfaceRedrawNeeded: " + surface);
         if (surface != null) {
             onSurfaceRedrawNeededNative(nativeRenderer, surface);
         }

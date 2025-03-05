@@ -1,7 +1,3 @@
-//
-// Created by xhui on 2024/10/7.
-//
-
 #ifndef SHADERTOYANDROID_SHADER_H
 #define SHADERTOYANDROID_SHADER_H
 

@@ -34,8 +34,8 @@ class GLRenderer : public Renderer {
 public:
     explicit GLRenderer(ANativeWindow *window);
     ~GLRenderer() override;
-    virtual void drawFrame() override;
-    virtual void submit() override;
+    void drawFrame() override;
+    void submit() override;
 private:
     void initGLES();
     void releaseSurfaceContext();

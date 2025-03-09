@@ -7,4 +7,6 @@
 .externalNativeBuild
 .cxx
 .idea/**
+.cache/**
 local.properties
+compile_commands.json

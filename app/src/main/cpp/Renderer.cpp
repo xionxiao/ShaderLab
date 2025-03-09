@@ -1,3 +1,4 @@
+#include <atomic>
 #include <chrono>
 #include <GLES3/gl3.h>
 #include "include/ALog.h"
@@ -23,8 +24,8 @@ Renderer::~Renderer() {
 }
 
 void Renderer::render() {
-    while (true) {
-       std::this_thread::sleep_for(1000ms);
+    while (mStarted.load(std::memory_order_acquire)) {
+       // std::this_thread::sleep_for(1000ms);
        std::lock_guard<std::mutex> lock(this->mMutex);
        this->drawFrame();
        this->submit();
@@ -32,12 +33,13 @@ void Renderer::render() {
 }
 
 void Renderer::stop() {
-    mStarted.store(false, std::memory_order_relaxed);
+    mStarted.store(false, std::memory_order_release);
 }
 
 void Renderer::start() {
+    // TODO: move the thread outside or separate to a class
     mThread = std::make_shared<std::thread>(&Renderer::render, this);
-    mStarted.store(true, std::memory_order_relaxed);
+    mStarted.store(true, std::memory_order_release);
 }
 
 void Renderer::drawFrame() {

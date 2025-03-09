@@ -1,6 +1,6 @@
 #include <chrono>
 #include <GLES3/gl3.h>
-#include "include/Log.h"
+#include "include/ALog.h"
 #include "include/Renderer.h"
 #include "include/Shader.h"
 

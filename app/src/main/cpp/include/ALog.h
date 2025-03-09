@@ -1,9 +1,5 @@
-//
-// Created by xhui on 2024/10/6.
-//
-
-#ifndef SHADERTOYANDROID_LOG_H
-#define SHADERTOYANDROID_LOG_H
+#ifndef SHADERTOYANDROID_ALOG_H
+#define SHADERTOYANDROID_ALOG_H
 
 #pragma once
 
@@ -67,4 +63,4 @@
     if (cond) __android_log_assert(#cond, LOG_TAG, __VA_ARGS__)
 #endif
 
-#endif //SHADERTOYANDROID_LOG_H
+#endif //SHADERTOYANDROID_ALOG_H

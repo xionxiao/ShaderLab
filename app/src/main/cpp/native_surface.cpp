@@ -1,6 +1,6 @@
 #include <jni.h>
 #include <android/native_window_jni.h>
-#include "include/Log.h"
+#include "include/ALog.h"
 #include "include/Renderer.h"
 
 #ifdef LOG_TAG

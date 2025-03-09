@@ -1,5 +1,8 @@
 #ifndef SHADERTOYANDROID_ATRACE_H
 #define SHADERTOYANDROID_ATRACE_H
+
+#pragma onece
+
 #include <android/trace.h>
 
 #define ATRACE_NAME(name) ScopedTrace ___tracer(name)

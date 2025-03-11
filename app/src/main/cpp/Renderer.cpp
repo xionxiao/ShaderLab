@@ -1,9 +1,8 @@
-#include <atomic>
 #include <chrono>
 #include <GLES3/gl3.h>
-#include "include/ALog.h"
-#include "include/Renderer.h"
-#include "include/Shader.h"
+#include "ALog.h"
+#include "Renderer.h"
+#include "Shader.h"
 
 #ifdef LOG_TAG
 #undef LOG_TAG
@@ -20,42 +19,15 @@ Renderer::Renderer(ANativeWindow *window) : mWindow(window) {
 
 Renderer::~Renderer() {
     // TODO: stop thread
-    this->stop();
 }
 
 void Renderer::render() {
-    while (mStarted.load(std::memory_order_acquire)) {
-       // std::this_thread::sleep_for(1000ms);
-       std::lock_guard<std::mutex> lock(this->mMutex);
-       this->drawFrame();
-       this->submit();
-    }
-}
-
-void Renderer::stop() {
-    mStarted.store(false, std::memory_order_release);
-}
-
-void Renderer::start() {
-    // TODO: move the thread outside or separate to a class
-    mThread = std::make_shared<std::thread>(&Renderer::render, this);
-    mStarted.store(true, std::memory_order_release);
-}
-
-void Renderer::drawFrame() {
     ALOGD("%s", "Renderer::draw()");
     if (mShader) {
         mShader->execute();
     }
 }
 
-void Renderer::submit() {
-
-}
-
-void Renderer::pause() {
-
-}
 
 GLRenderer::GLRenderer(ANativeWindow* window) :
         Renderer(window),
@@ -71,6 +43,11 @@ void GLRenderer::initGLES() {
     mDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     eglInitialize(mDisplay, &majorVersion, &minorVersion);
     createSurfaceContext();
+}
+
+void GLRenderer::render() {
+    drawFrame();
+    submit();
 }
 
 GLRenderer::~GLRenderer() {
@@ -113,7 +90,6 @@ void GLRenderer::createSurfaceContext() {
 
 void GLRenderer::releaseSurfaceContext() {
     if (mDisplay != EGL_NO_DISPLAY) {
-        this->stop();
         eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         if (mContext != EGL_NO_CONTEXT) {
             eglDestroyContext(mDisplay, mContext);

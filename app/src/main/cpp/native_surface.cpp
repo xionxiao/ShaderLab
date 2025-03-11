@@ -1,7 +1,7 @@
 #include <jni.h>
 #include <android/native_window_jni.h>
-#include "include/ALog.h"
-#include "include/Renderer.h"
+#include "ALog.h"
+#include "Renderer.h"
 
 #ifdef LOG_TAG
 #undef LOG_TAG
@@ -57,5 +57,5 @@ Java_com_hweex_shadertoyandroid_ui_view_NativeSurfaceView_onSurfaceRedrawNeededN
     // TODO: implement onSurfaceRedrawNeededNative()
     ALOGD("%s", __func__ );
     auto native_renderer = (Renderer*)(renderer);
-    native_renderer->start();
+    // native_renderer->start();
 }

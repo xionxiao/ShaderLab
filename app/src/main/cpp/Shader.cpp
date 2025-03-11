@@ -1,8 +1,8 @@
 #include <array>
 
 #include <GLES3/gl3.h>
-#include "include/ALog.h"
-#include "include/Shader.h"
+#include "ALog.h"
+#include "Shader.h"
 
 void GLSLShader::activate() const {
     glUseProgram(mProgram);

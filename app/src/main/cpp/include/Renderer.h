@@ -15,17 +15,9 @@ public:
     explicit Renderer(ANativeWindow* window);
     virtual ~Renderer() = 0;
     virtual void render();
-    void stop();
-    void start();
-    void pause();
-    virtual void drawFrame();
-    virtual void submit();
 
 protected:
     ANativeWindow* mWindow;
-    std::shared_ptr<std::thread> mThread;
-    std::mutex mMutex;
-    std::atomic<bool> mStarted = false;
     // TODO: use condition variable
     std::shared_ptr<Shader> mShader;
 };
@@ -34,8 +26,9 @@ class GLRenderer : public Renderer {
 public:
     explicit GLRenderer(ANativeWindow *window);
     ~GLRenderer() override;
-    void drawFrame() override;
-    void submit() override;
+    void render() override;
+    void drawFrame();
+    void submit();
 private:
     void initGLES();
     void releaseSurfaceContext();

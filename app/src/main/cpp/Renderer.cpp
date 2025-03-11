@@ -1,8 +1,7 @@
-#include <chrono>
 #include <GLES3/gl3.h>
+#include <android/native_window.h>
 #include "ALog.h"
 #include "Renderer.h"
-#include "Shader.h"
 
 #ifdef LOG_TAG
 #undef LOG_TAG
@@ -13,6 +12,21 @@
 using namespace std::chrono_literals;
 #define CORNFLOWER_BLUE 100 / 255.f, 149 / 255.f, 237 / 255.f, 1
 #define CORNFLOWER_RED 200 / 255.f, 149 / 255.f, 237 / 255.f, 1
+
+Renderer* Renderer::create(RenderType type, ANativeWindow* window) {
+    if (window == nullptr) {
+        return nullptr;
+    }
+    switch (type) {
+    case RenderType::GLES:
+        return new GLRenderer(window);
+    case RenderType::VULKAN:
+    case RenderType::SKIA_GL:
+    case RenderType::SKIA_VK:
+      break;
+    }
+    return nullptr;
+}
 
 Renderer::Renderer(ANativeWindow *window) : mWindow(window) {
 }
@@ -119,4 +133,3 @@ void GLRenderer::drawFrame() {
 void GLRenderer::submit() {
     eglSwapBuffers(mDisplay, mSurface);
 }
-

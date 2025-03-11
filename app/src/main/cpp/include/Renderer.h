@@ -1,20 +1,26 @@
 #ifndef SHADER_TOY_ANDROID_RENDERER_H
 #define SHADER_TOY_ANDROID_RENDERER_H
 
-#include <thread>
-#include <mutex>
-#include <atomic>
-
 #include <android/looper.h>
 #include <android/native_activity.h>
 #include <EGL/egl.h>
 #include "Shader.h"
 
+enum class RenderType {
+    GLES,
+    VULKAN,
+    SKIA_GL,
+    SKIA_VK,
+};
+
 class Renderer {
 public:
-    explicit Renderer(ANativeWindow* window);
+    static Renderer* create(RenderType type, ANativeWindow* window);
     virtual ~Renderer() = 0;
     virtual void render();
+
+protected:
+    explicit Renderer(ANativeWindow* window);
 
 protected:
     ANativeWindow* mWindow;

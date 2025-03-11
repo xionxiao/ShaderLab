@@ -1,7 +1,4 @@
-#include <array>
-
 #include <GLES3/gl3.h>
-#include "ALog.h"
 #include "Shader.h"
 
 void GLSLShader::activate() const {
@@ -42,6 +39,7 @@ GLuint GLSLShader::loadShader(const std::string &vertexShaderSource,
         glAttachShader(program, fragmentShader);
         glLinkProgram(program);
     }
+    return 0;
 }
 
 template<typename Type>

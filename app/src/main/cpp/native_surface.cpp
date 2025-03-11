@@ -16,7 +16,7 @@ Java_com_hweex_shadertoyandroid_ui_view_NativeSurfaceView_onSurfaceCreatedNative
     // TODO: implement onSurfaceCreatedNative()
     ALOGD("%s", __func__ );
     auto window = ANativeWindow_fromSurface(env, surface);
-    auto renderer = new GLRenderer(window);
+    auto renderer = Renderer::create(RenderType::GLES, window);
     // renderer->start();
     return (jlong) renderer;
 }

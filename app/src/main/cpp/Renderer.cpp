@@ -1,5 +1,7 @@
 #include <GLES3/gl3.h>
 #include <android/native_window.h>
+#include <cstddef>
+#include <memory>
 #include "ALog.h"
 #include "Renderer.h"
 
@@ -13,13 +15,13 @@ using namespace std::chrono_literals;
 #define CORNFLOWER_BLUE 100 / 255.f, 149 / 255.f, 237 / 255.f, 1
 #define CORNFLOWER_RED 200 / 255.f, 149 / 255.f, 237 / 255.f, 1
 
-Renderer* Renderer::create(RenderType type, ANativeWindow* window) {
+std::shared_ptr<Renderer> Renderer::create(RenderType type, ANativeWindow* window) {
     if (window == nullptr) {
         return nullptr;
     }
     switch (type) {
     case RenderType::GLES:
-        return new GLRenderer(window);
+        return std::shared_ptr<Renderer>(new GLRenderer(window));
     case RenderType::VULKAN:
     case RenderType::SKIA_GL:
     case RenderType::SKIA_VK:

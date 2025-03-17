@@ -15,7 +15,7 @@ enum class RenderType {
 
 class Renderer {
 public:
-    static Renderer* create(RenderType type, ANativeWindow* window);
+    static std::shared_ptr<Renderer> create(RenderType type, ANativeWindow* window);
     virtual ~Renderer() = 0;
     virtual void render();
 

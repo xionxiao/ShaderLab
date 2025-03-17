@@ -1,6 +1,9 @@
 #include <jni.h>
 #include <android/native_window_jni.h>
+#include <memory>
+#include <pthread.h>
 #include "ALog.h"
+#include "RenderThread.h"
 #include "Renderer.h"
 
 #ifdef LOG_TAG
@@ -8,6 +11,20 @@
 #endif
 
 #define LOG_TAG "NativeSurfaceJNI"
+class NativeSurfaceView {
+public:
+    NativeSurfaceView(RenderType type, ANativeWindow* window) : mType(type) {
+        mRenderer = Renderer::create(mType, window);
+        mThread.setRenderer(mRenderer);
+    }
+    void start() { mThread.start(); }
+    void pause() { mThread.pause(); }
+private:
+    RenderType mType;
+    RenderThread mThread;
+    std::shared_ptr<Renderer> mRenderer;
+};
+
 extern "C"
 JNIEXPORT jlong JNICALL
 Java_com_hweex_shadertoyandroid_ui_view_NativeSurfaceView_onSurfaceCreatedNative(JNIEnv *env,
@@ -16,8 +33,7 @@ Java_com_hweex_shadertoyandroid_ui_view_NativeSurfaceView_onSurfaceCreatedNative
     // TODO: implement onSurfaceCreatedNative()
     ALOGD("%s", __func__ );
     auto window = ANativeWindow_fromSurface(env, surface);
-    auto renderer = Renderer::create(RenderType::GLES, window);
-    // renderer->start();
+    auto renderer = new NativeSurfaceView(RenderType::GLES, window);
     return (jlong) renderer;
 }
 
@@ -32,7 +48,9 @@ Java_com_hweex_shadertoyandroid_ui_view_NativeSurfaceView_onSurfaceChangedNative
                                                                                  jint height) {
     // TODO: implement onSurfaceChangedNative()
     ALOGD("%s", __func__ );
-    auto native_renderer = (GLRenderer*)(renderer);
+    auto native_view= (NativeSurfaceView*)(renderer);
+    native_view->start();
+
 }
 
 extern "C"
@@ -43,9 +61,8 @@ Java_com_hweex_shadertoyandroid_ui_view_NativeSurfaceView_onSurfaceDestroyedNati
                                                                                    jobject surface) {
     // TODO: implement onSurfaceDestroyedNative()
     ALOGD("%s", __func__ );
-    auto native_renderer = (GLRenderer*)(renderer);
+    auto native_renderer = (NativeSurfaceView*)(renderer);
     delete native_renderer;
-
 }
 
 extern "C"
@@ -56,6 +73,6 @@ Java_com_hweex_shadertoyandroid_ui_view_NativeSurfaceView_onSurfaceRedrawNeededN
                                                                                       jobject surface) {
     // TODO: implement onSurfaceRedrawNeededNative()
     ALOGD("%s", __func__ );
-    auto native_renderer = (Renderer*)(renderer);
+    // auto native_renderer = (NativeSurfaceView*)(renderer);
     // native_renderer->start();
 }

@@ -15,6 +15,19 @@ public class NativeSurfaceView extends SurfaceView implements SurfaceHolder.Call
         System.loadLibrary("native-surface");
     }
 
+    public enum RenderType {
+        GLES,
+        VULKAN,
+        SKIA_GL,
+        SKIA_VK
+    };
+
+    /*
+     * Change Renderer
+     */
+    public void setRendererType(RenderType type) {
+    }
+
     public NativeSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         Log.d(LOG_TAG, "Constructor");
@@ -46,7 +59,6 @@ public class NativeSurfaceView extends SurfaceView implements SurfaceHolder.Call
         if (surface != null) {
             onSurfaceDestroyedNative(nativeRenderer, surface);
         }
-
     }
 
     @Override

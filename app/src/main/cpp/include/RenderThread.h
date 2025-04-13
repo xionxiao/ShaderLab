@@ -9,10 +9,15 @@
 
 class RenderThread {
 public:
+    static const int RENDERMODE_CONTINUOUSLY = -1;
+    static const int RENDERMODE_WHEN_DIRTY = 0;
+
     RenderThread();
     ~RenderThread();
     void start();
+    void stop();
     void pause();
+    void resume();
     void setRenderer(std::shared_ptr<Renderer> renderer);
     void setFrameRate(int frameRate);
     int getFrameRate();

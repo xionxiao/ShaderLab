@@ -18,7 +18,9 @@ public:
         mThread.setRenderer(mRenderer);
     }
     void start() { mThread.start(); }
+    void stop() { mThread.stop(); }
     void pause() { mThread.pause(); }
+    void resume() { mThread.resume(); }
 private:
     RenderType mType;
     RenderThread mThread;

@@ -3,3 +3,5 @@ IndentWidth: 4
 AccessModifierOffset: -4
 MaxEmptyLinesToKeep: 1
 KeepEmptyLinesAtTheStartOfBlocks: true
+AlignAfterOpenBracket: AlwaysBreak
+BreakArrays: true

@@ -1,9 +1,9 @@
+#include "Renderer.h"
+#include "ALog.h"
 #include <GLES3/gl3.h>
 #include <android/native_window.h>
 #include <cstddef>
 #include <memory>
-#include "ALog.h"
-#include "Renderer.h"
 
 #ifdef LOG_TAG
 #undef LOG_TAG
@@ -11,11 +11,11 @@
 
 #define LOG_TAG "ShaderToyRenderer"
 
-using namespace std::chrono_literals;
 #define CORNFLOWER_BLUE 100 / 255.f, 149 / 255.f, 237 / 255.f, 1
 #define CORNFLOWER_RED 200 / 255.f, 149 / 255.f, 237 / 255.f, 1
 
-std::shared_ptr<Renderer> Renderer::create(RenderType type, ANativeWindow* window) {
+std::shared_ptr<Renderer>
+Renderer::create(RenderType type, ANativeWindow *window) {
     if (window == nullptr) {
         return nullptr;
     }
@@ -25,13 +25,12 @@ std::shared_ptr<Renderer> Renderer::create(RenderType type, ANativeWindow* windo
     case RenderType::VULKAN:
     case RenderType::SKIA_GL:
     case RenderType::SKIA_VK:
-      break;
+        break;
     }
     return nullptr;
 }
 
-Renderer::Renderer(ANativeWindow *window) : mWindow(window) {
-}
+Renderer::Renderer(ANativeWindow *window) : mWindow(window) {}
 
 Renderer::~Renderer() {
     // TODO: stop thread
@@ -45,16 +44,16 @@ void Renderer::render() {
 }
 
 void Renderer::update(ANativeWindow *window, int width, int height) {
-    ALOGD("Renderer::update: window=%p, width=%d, height=%d", window, width, height);
+    ALOGD(
+        "Renderer::update: window=%p, width=%d, height=%d", window, width,
+        height);
     // 基类实现，子类应该重写这个函数
     mWindow = window;
 }
 
-GLRenderer::GLRenderer(ANativeWindow* window) :
-        Renderer(window),
-        mDisplay(EGL_NO_DISPLAY),
-        mSurface(EGL_NO_SURFACE),
-        mContext(EGL_NO_CONTEXT) {
+GLRenderer::GLRenderer(ANativeWindow *window)
+    : Renderer(window), mDisplay(EGL_NO_DISPLAY), mSurface(EGL_NO_SURFACE),
+      mContext(EGL_NO_CONTEXT) {
     initGLES();
 }
 
@@ -67,11 +66,15 @@ void GLRenderer::initGLES() {
 }
 
 void GLRenderer::update(ANativeWindow *window, int width, int height) {
-    ALOGD("GLRenderer::update: window=%p, width=%d, height=%d", window, width, height);
+    ALOGD(
+        "GLRenderer::update: window=%p, width=%d, height=%d", window, width,
+        height);
 
     // 如果窗口发生变化，需要重新创建EGL表面
     if (window != mWindow) {
-        ALOGD("Window changed, recreating EGL surface: old=%p, new=%p", mWindow, window);
+        ALOGD(
+            "Window changed, recreating EGL surface: old=%p, new=%p", mWindow,
+            window);
         // 释放旧的EGL资源
         releaseSurfaceContext();
         // 更新窗口引用
@@ -86,7 +89,9 @@ void GLRenderer::update(ANativeWindow *window, int width, int height) {
         eglQuerySurface(mDisplay, mSurface, EGL_HEIGHT, &currentHeight);
 
         if (currentWidth != width || currentHeight != height) {
-            ALOGD("Surface size changed: %dx%d -> %dx%d", currentWidth, currentHeight, width, height);
+            ALOGD(
+                "Surface size changed: %dx%d -> %dx%d", currentWidth,
+                currentHeight, width, height);
             // 确保EGL上下文是当前的
             eglMakeCurrent(mDisplay, mSurface, mSurface, mContext);
             // 更新视口
@@ -110,16 +115,18 @@ GLRenderer::~GLRenderer() {
 
 void GLRenderer::createSurfaceContext() {
     if (mDisplay != EGL_NO_DISPLAY) {
+        // clang-format off
         constexpr EGLint attrs[] = {
-                EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
-                EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-                EGL_BLUE_SIZE, 8,
-                EGL_GREEN_SIZE, 8,
-                EGL_RED_SIZE, 8,
-                EGL_ALPHA_SIZE, 8,
-                EGL_DEPTH_SIZE, 24,
-                EGL_NONE
+            EGL_RENDERABLE_TYPE, EGL_OPENGL_ES3_BIT,
+            EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+            EGL_BLUE_SIZE, 8,
+            EGL_GREEN_SIZE, 8,
+            EGL_RED_SIZE, 8,
+            EGL_ALPHA_SIZE, 8,
+            EGL_DEPTH_SIZE, 24,
+            EGL_NONE
         };
+        // clang-format on
 
         EGLint numConfigs;
         eglChooseConfig(mDisplay, attrs, nullptr, 0, &numConfigs);
@@ -129,18 +136,17 @@ void GLRenderer::createSurfaceContext() {
 
         ALOGD("numConfigs %d", numConfigs);
 
-        mSurface = eglCreateWindowSurface(mDisplay, configs[0], mWindow, nullptr);
-        EGLint contextAttrs[] = {
-                EGL_CONTEXT_CLIENT_VERSION, 3,
-                EGL_NONE
-        };
+        mSurface =
+            eglCreateWindowSurface(mDisplay, configs[0], mWindow, nullptr);
+        EGLint contextAttrs[] = {EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE};
         mContext = eglCreateContext(mDisplay, configs[0], nullptr, nullptr);
     }
 }
 
 void GLRenderer::releaseSurfaceContext() {
     if (mDisplay != EGL_NO_DISPLAY) {
-        eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+        eglMakeCurrent(
+            mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         if (mContext != EGL_NO_CONTEXT) {
             eglDestroyContext(mDisplay, mContext);
             mContext = EGL_NO_CONTEXT;
@@ -167,5 +173,6 @@ void GLRenderer::drawFrame() {
 }
 
 void GLRenderer::submit() {
+    // swap buffer
     eglSwapBuffers(mDisplay, mSurface);
 }

@@ -44,6 +44,11 @@ void Renderer::render() {
     }
 }
 
+void Renderer::update(ANativeWindow *window, int width, int height) {
+    ALOGD("Renderer::update: window=%p, width=%d, height=%d", window, width, height);
+    // 基类实现，子类应该重写这个函数
+    mWindow = window;
+}
 
 GLRenderer::GLRenderer(ANativeWindow* window) :
         Renderer(window),
@@ -59,6 +64,35 @@ void GLRenderer::initGLES() {
     mDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     eglInitialize(mDisplay, &majorVersion, &minorVersion);
     createSurfaceContext();
+}
+
+void GLRenderer::update(ANativeWindow *window, int width, int height) {
+    ALOGD("GLRenderer::update: window=%p, width=%d, height=%d", window, width, height);
+
+    // 如果窗口发生变化，需要重新创建EGL表面
+    if (window != mWindow) {
+        ALOGD("Window changed, recreating EGL surface: old=%p, new=%p", mWindow, window);
+        // 释放旧的EGL资源
+        releaseSurfaceContext();
+        // 更新窗口引用
+        mWindow = window;
+        // 重新创建EGL表面和上下文
+        createSurfaceContext();
+    }
+    // 如果尺寸发生变化，更新视口
+    if (width > 0 && height > 0) {
+        EGLint currentWidth, currentHeight;
+        eglQuerySurface(mDisplay, mSurface, EGL_WIDTH, &currentWidth);
+        eglQuerySurface(mDisplay, mSurface, EGL_HEIGHT, &currentHeight);
+
+        if (currentWidth != width || currentHeight != height) {
+            ALOGD("Surface size changed: %dx%d -> %dx%d", currentWidth, currentHeight, width, height);
+            // 确保EGL上下文是当前的
+            eglMakeCurrent(mDisplay, mSurface, mSurface, mContext);
+            // 更新视口
+            glViewport(0, 0, width, height);
+        }
+    }
 }
 
 void GLRenderer::render() {

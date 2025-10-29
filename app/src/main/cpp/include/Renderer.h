@@ -4,6 +4,7 @@
 #include <android/looper.h>
 #include <android/native_activity.h>
 #include <EGL/egl.h>
+#include <android/native_window.h>
 #include "Shader.h"
 
 enum class RenderType {
@@ -18,6 +19,7 @@ public:
     static std::shared_ptr<Renderer> create(RenderType type, ANativeWindow* window);
     virtual ~Renderer() = 0;
     virtual void render();
+    virtual void update(ANativeWindow *window, int width, int height);
 
 protected:
     explicit Renderer(ANativeWindow* window);
@@ -33,6 +35,7 @@ public:
     explicit GLRenderer(ANativeWindow *window);
     ~GLRenderer() override;
     void render() override;
+    void update(ANativeWindow *window, int width, int height) override;
     void drawFrame();
     void submit();
 private:

@@ -31,26 +31,27 @@ public:
         return (jlong)renderer;
     }
 
-    static void onSurfaceChanged(JNIEnv *env, jobject thiz, jlong renderer,
+    static void onSurfaceChanged(JNIEnv *env, jobject thiz, jlong nativePtr,
                                  jobject surface, jint format, jint width,
                                  jint height) {
         ALOGD("%s", __func__);
-        auto native_view = (NativeSurfaceView *)(renderer);
-        native_view->start();
+        if (nativePtr && surface) {
+            auto nativeView = (NativeSurfaceView *)(nativePtr);
+            auto window = ANativeWindow_fromSurface(env, surface);
+            nativeView->mRenderer->update(window, width, height);
+        }
     }
 
-    static void onSurfaceDestroyed(JNIEnv *env, jobject thiz, jlong renderer,
+    static void onSurfaceDestroyed(JNIEnv *env, jobject thiz, jlong nativePtr,
                                    jobject surface) {
         ALOGD("%s", __func__);
-        auto native_renderer = (NativeSurfaceView *)(renderer);
-        delete native_renderer;
+        auto nativeSurfaceView = (NativeSurfaceView *)(nativePtr);
+        delete nativeSurfaceView;
     }
 
     static void onSurfaceRedrawNeeded(JNIEnv *env, jobject thiz, jlong renderer,
                                       jobject surface) {
         ALOGD("%s", __func__);
-        // auto native_renderer = (NativeSurfaceView*)(renderer);
-        // native_renderer->start();
     }
 
 private:

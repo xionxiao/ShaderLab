@@ -1,11 +1,11 @@
 #ifndef SHADER_TOY_ANDROID_RENDERTHREAD_H
 #define SHADER_TOY_ANDROID_RENDERTHREAD_H
 
+#include "Renderer.h"
 #include <algorithm>
 #include <condition_variable>
 #include <mutex>
 #include <thread>
-#include "Renderer.h"
 
 class RenderThread {
 public:

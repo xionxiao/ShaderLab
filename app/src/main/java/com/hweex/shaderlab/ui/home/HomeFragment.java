@@ -1,4 +1,4 @@
-package com.hweex.shadertoyandroid.ui.home;
+package com.hweex.shaderlab.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hweex.shadertoyandroid.databinding.FragmentHomeBinding;
-import com.hweex.shadertoyandroid.ui.view.NativeSurfaceView;
+import com.hweex.shaderlab.databinding.FragmentHomeBinding;
+import com.hweex.shaderlab.ui.view.NativeSurfaceView;
 
 public class HomeFragment extends Fragment {
 

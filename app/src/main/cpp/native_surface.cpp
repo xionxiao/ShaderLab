@@ -60,7 +60,7 @@ private:
     std::shared_ptr<Renderer> mRenderer;
 };
 
-#define JNI_CLASS_NAME "com/hweex/shadertoyandroid/ui/view/NativeSurfaceView"
+#define JNI_CLASS_NAME "com/hweex/shaderlab/ui/view/NativeSurfaceView"
 
 // JNI method table
 static JNINativeMethod gMethods[] = {

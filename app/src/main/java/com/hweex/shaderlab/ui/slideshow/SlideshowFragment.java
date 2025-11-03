@@ -1,4 +1,4 @@
-package com.hweex.shadertoyandroid.ui.slideshow;
+package com.hweex.shaderlab.ui.slideshow;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hweex.shadertoyandroid.databinding.FragmentSlideshowBinding;
+import com.hweex.shaderlab.databinding.FragmentSlideshowBinding;
 
 public class SlideshowFragment extends Fragment {
 

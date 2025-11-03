@@ -1,4 +1,4 @@
-package com.hweex.shadertoyandroid.ui.view;
+package com.hweex.shaderlab.ui.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

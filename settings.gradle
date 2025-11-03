@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ShaderToyAndroid"
+rootProject.name = "ShaderLab"
 include ':app'

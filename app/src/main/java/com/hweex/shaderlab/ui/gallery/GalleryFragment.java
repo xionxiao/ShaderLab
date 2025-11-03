@@ -1,4 +1,4 @@
-package com.hweex.shadertoyandroid.ui.gallery;
+package com.hweex.shaderlab.ui.gallery;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.hweex.shadertoyandroid.databinding.FragmentGalleryBinding;
+import com.hweex.shaderlab.databinding.FragmentGalleryBinding;
 
 public class GalleryFragment extends Fragment {
 

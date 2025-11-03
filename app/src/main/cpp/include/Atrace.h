@@ -1,5 +1,5 @@
-#ifndef SHADERTOYANDROID_ATRACE_H
-#define SHADERTOYANDROID_ATRACE_H
+#ifndef SHADERLAB_ATRACE_H
+#define SHADERLAB_ATRACE_H
 
 #pragma onece
 
@@ -19,4 +19,4 @@ public:
     }
 };
 
-#endif //SHADERTOYANDROID_ATRACE_H
+#endif //SHADERLAB_ATRACE_H

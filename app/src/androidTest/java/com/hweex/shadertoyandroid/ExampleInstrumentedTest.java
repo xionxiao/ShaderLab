@@ -1,4 +1,4 @@
-package com.hweex.shadertoyandroid;
+package com.hweex.shaderlab;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.hweex.shadertoyandroid", appContext.getPackageName());
+        assertEquals("com.hweex.shaderlab", appContext.getPackageName());
     }
 }

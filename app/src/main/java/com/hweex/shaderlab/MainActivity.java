@@ -1,4 +1,4 @@
-package com.hweex.shadertoyandroid;
+package com.hweex.shaderlab;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.hweex.shadertoyandroid.databinding.ActivityMainBinding;
+import com.hweex.shaderlab.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;

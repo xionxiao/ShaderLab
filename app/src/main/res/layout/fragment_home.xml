@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <com.hweex.shadertoyandroid.ui.view.NativeSurfaceView
+    <com.hweex.shaderlab.ui.view.NativeSurfaceView
         android:id="@+id/native_surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

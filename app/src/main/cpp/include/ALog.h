@@ -1,5 +1,5 @@
-#ifndef SHADERTOYANDROID_ALOG_H
-#define SHADERTOYANDROID_ALOG_H
+#ifndef SHADERLAB_ALOG_H
+#define SHADERLAB_ALOG_H
 
 #pragma once
 
@@ -63,4 +63,4 @@
     if (cond) __android_log_assert(#cond, LOG_TAG, __VA_ARGS__)
 #endif
 
-#endif //SHADERTOYANDROID_ALOG_H
+#endif //SHADERLAB_ALOG_H

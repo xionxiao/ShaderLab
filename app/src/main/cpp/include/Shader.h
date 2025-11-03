@@ -1,5 +1,5 @@
-#ifndef SHADERTOYANDROID_SHADER_H
-#define SHADERTOYANDROID_SHADER_H
+#ifndef SHADERLAB_SHADER_H
+#define SHADERLAB_SHADER_H
 
 #include <GLES3/gl3.h>
 #include <string>
@@ -41,4 +41,4 @@ public:
     virtual void execute() override {}
 };
 
-#endif //SHADERTOYANDROID_SHADER_H
+#endif //SHADERLAB_SHADER_H

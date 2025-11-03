@@ -1,4 +1,4 @@
-package com.hweex.shadertoyandroid.ui.gallery;
+package com.hweex.shaderlab.ui.gallery;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

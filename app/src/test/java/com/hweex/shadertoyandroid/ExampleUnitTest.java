@@ -1,4 +1,4 @@
-package com.hweex.shadertoyandroid;
+package com.hweex.shaderlab;
 
 import org.junit.Test;
 

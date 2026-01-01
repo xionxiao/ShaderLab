@@ -125,7 +125,7 @@ void RenderThread::run() {
             mRenderer->render();
         }
 
-        // 简单的帧率控制
+        // TODO: 简单的帧率控制
         std::this_thread::sleep_for(std::chrono::milliseconds(16)); // ~60 FPS
     }
 
